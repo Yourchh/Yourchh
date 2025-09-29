@@ -1,0 +1,77 @@
+name: Update README with Recent Activity
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq curl
+
+      - name: Fetch GitHub activity
+        id: fetch_activity
+        env:
+          GH_TOKEN: ${{ secrets.GH_PATH }}
+        run: |
+          # GraphQL query
+          QUERY='
+          {
+            viewer {
+              contributionsCollection {
+                commitContributionsByRepository(maxRepositories: 5) {
+                  repository { name url }
+                  contributions(first: 10) {
+                    nodes { occurredAt }
+                  }
+                }
+                pullRequestContributions(first: 10) {
+                  nodes { pullRequest { title url repository { name } createdAt } }
+                }
+                issueContributions(first: 10) {
+                  nodes { issue { title url repository { name } createdAt } }
+                }
+              }
+            }
+          }'
+
+          RESPONSE=$(curl -s -H "Authorization: bearer $GH_TOKEN" \
+            -X POST -d "{\"query\": \"$QUERY\"}" https://api.github.com/graphql)
+
+          echo "$RESPONSE" > activity.json
+
+          # Formatear eventos con tipo y fecha
+          COMMITS=$(jq -r '.data.viewer.contributionsCollection.commitContributionsByRepository[] | .contributions.nodes[] | "{ \"type\": \"commit\", \"desc\": \"⚡ Commit en " + .repository.name + " el " + .occurredAt[0:10] + "\", \"date\": \"" + .occurredAt + "\" }"' activity.json)
+          PRS=$(jq -r '.data.viewer.contributionsCollection.pullRequestContributions.nodes[] | "{ \"type\": \"pr\", \"desc\": \"📝 PR: [" + .pullRequest.title + "](" + .pullRequest.url + ") en " + .pullRequest.repository.name + " el " + .pullRequest.createdAt[0:10] + "\", \"date\": \"" + .pullRequest.createdAt + "\" }"' activity.json)
+          ISSUES=$(jq -r '.data.viewer.contributionsCollection.issueContributions.nodes[] | "{ \"type\": \"issue\", \"desc\": \"❗ Issue: [" + .issue.title + "](" + .issue.url + ") en " + .issue.repository.name + " el " + .issue.createdAt[0:10] + "\", \"date\": \"" + .issue.createdAt + "\" }"' activity.json)
+
+          # Combinar todos los eventos
+          ALL_EVENTS=$(printf "%s\n%s\n%s\n" "$COMMITS" "$PRS" "$ISSUES" | jq -s 'sort_by(.date) | reverse | .[0:10] | .[].desc')
+
+          # Unir en formato listo para README
+          ACTIVITY=$(echo "$ALL_EVENTS" | sed '/^$/d' | sed ':a;N;$!ba;s/\n/\n/g')
+
+          echo "::set-output name=ACTIVITY::$ACTIVITY"
+
+      - name: Update README
+        run: |
+          sed -i "/<!--START_SECTION:activity-->/, /<!--END_SECTION:activity-->/c\<!--START_SECTION:activity-->\n${{ steps.fetch_activity.outputs.ACTIVITY }}\n<!--END_SECTION:activity-->" README.md
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update recent activity"
+          git push
