@@ -21,9 +21,9 @@ jobs:
         uses: jamesgeorge007/github-activity-readme@master
         with:
           GH_USERNAME: Yourchh
-          MAX_LINES: 5
+          MAX_LINES: 6
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
       # Hacer commit solo si hay cambios
       - name: Commit changes if any
@@ -33,7 +33,7 @@ jobs:
           branch: main
           file_pattern: README.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
 
       # Opcional: mostrar un mensaje si no hay cambios
       - name: Check for changes
