@@ -1,21 +1,23 @@
-name: Update README
+name: Update GitHub Activity
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "0 */12 * * *"  # Cada 12 horas
   workflow_dispatch:
 
 jobs:
-  build:
+  update-readme:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # para permitir escritura en README
+      contents: write  # Necesario para hacer commits
 
     steps:
+      # Clonar tu repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update recent activity in README
+      # Actualizar la actividad reciente
+      - name: Update GitHub activity in README
         uses: jamesgeorge007/github-activity-readme@master
         with:
           GH_USERNAME: Yourchh
@@ -23,9 +25,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit README update
-        uses: EndBug/add-and-commit@v9
+      # Hacer commit solo si hay cambios
+      - name: Commit changes if any
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          author_name: github-actions
-          author_email: github-actions@github.com
-          message: "Update GitHub activity section"
+          commit_message: "Update GitHub activity section"
+          branch: main
+          file_pattern: README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Opcional: mostrar un mensaje si no hay cambios
+      - name: Check for changes
+        run: |
+          git diff --exit-code || echo "README updated!"
