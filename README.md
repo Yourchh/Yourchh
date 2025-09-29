@@ -7,6 +7,5 @@
 - ⚡ Un dato curioso: ¡Me encanta el diseño minimalista porque creo que menos es más y me inspira a encontrar soluciones elegantes y efectivas!
 
 ### :zap: Actividad reciente
-<!--RECENT_ACTIVITY:start-->
-<!--RECENT_ACTIVITY:end-->
-
+<!--START_SECTION:activity-->
+<!--END_SECTION:activity-->
