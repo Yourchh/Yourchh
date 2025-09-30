@@ -13,19 +13,6 @@
 
 ---
 
-### Sobre Mí
-
-Soy una persona creativa y responsable, con un profundo interés en la tecnología, el desarrollo web y la creación de soluciones centradas en el usuario. Mi formación única me permite abordar los problemas combinando el pensamiento lógico de la ingeniería con la eficiencia y optimización de la logística.
-
-Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortaleciendo mis habilidades en desarrollo de software y diseño UX/UI para contribuir en soluciones innovadoras y de alto impacto.
-
-- 🌱 **Actualmente aprendiendo:** Desarrollo web avanzado, patrones de diseño de software y metodologías ágiles.
-- 💞️ **Busco colaborar en:** Proyectos de diseño de interfaces, aplicaciones web y soluciones que combinen una gran estética con una funcionalidad impecable.
-- 📫 **Contacto:** **jorgeandreshernandezpelayo@gmail.com**
-- 😄 **Pronombres:** él/ellos
-
----
-
 ### 🚀 Habilidades (Skills)
 
 <p align="left">
@@ -45,6 +32,30 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
     <img src="https://img.shields.io/badge/GIT-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
   </a>
 </p>
+
+---
+
+### Sobre Mí
+
+Soy una persona creativa y responsable, con un profundo interés en la tecnología, el desarrollo web y la creación de soluciones centradas en el usuario. Mi formación única me permite abordar los problemas combinando el pensamiento lógico de la ingeniería con la eficiencia y optimización de la logística.
+
+Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortaleciendo mis habilidades en desarrollo de software y diseño UX/UI para contribuir en soluciones innovadoras y de alto impacto.
+
+- 🌱 **Actualmente aprendiendo:** Desarrollo web avanzado, patrones de diseño de software y metodologías ágiles.
+- 💞️ **Busco colaborar en:** Proyectos de diseño de interfaces, aplicaciones web y soluciones que combinen una gran estética con una funcionalidad impecable.
+- 📫 **Contacto:** **jorgeandreshernandezpelayo@gmail.com**
+- 😄 **Pronombres:** él/ellos
+
+---
+
+### ⚡ Actividad Reciente
+<!--RECENT_ACTIVITY:start--> 
+1. ⭐ Starred [platzi/git-github](https://github.com/platzi/git-github)
+2. 🔱 Forked [Yourchh/git-github](https://github.com/Yourchh/git-github) from [platzi/git-github](https://github.com/platzi/git-github)
+3. 📔 Created new repository [Yourchh/MVC](https://github.com/Yourchh/MVC)
+4. 📔 Created new repository [Yourchh/Peleter-a-y-Neveria-Ramirez](https://github.com/Yourchh/Peleter-a-y-Neveria-Ramirez)
+
+<!--RECENT_ACTIVITY:end-->
 
 ---
 
@@ -75,17 +86,3 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
 
 ---
 
-### ⚡ Actividad Reciente
-<!--RECENT_ACTIVITY:start--> 
-1. ⭐ Starred [platzi/git-github](https://github.com/platzi/git-github)
-2. 🔱 Forked [Yourchh/git-github](https://github.com/Yourchh/git-github) from [platzi/git-github](https://github.com/platzi/git-github)
-3. 📔 Created new repository [Yourchh/MVC](https://github.com/Yourchh/MVC)
-4. 📔 Created new repository [Yourchh/Peleter-a-y-Neveria-Ramirez](https://github.com/Yourchh/Peleter-a-y-Neveria-Ramirez)
-
-<!--RECENT_ACTIVITY:end-->
-
----
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Yourchh/Yourchh/main/dist/snake.svg" alt="Animación de contribuciones de GitHub" />
-</p>
