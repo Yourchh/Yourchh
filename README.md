@@ -1,5 +1,7 @@
-# ¡Hola! Soy Jorge Andrés Hernández Pelayo 👋
-
+# ¡Hola! Soy Jorge Andrés Hernández Pelayo 
+<p align="center">
+  <img src="https://media.giphy.com/media/l4FGlmpk9s0aomH2U/giphy.gif" width="600" alt="Funny coding GIF">
+</p>
 <p align="center">
   <em>Estudiante de <b>Ingeniería en Sistemas Computacionales</b> con una sólida formación en <b>Logística</b> y una gran pasión por el <b>Diseño de Experiencia de Usuario (UX)</b>.</em>
 </p>
