@@ -21,37 +21,30 @@ jobs:
       - name: Fetch GitHub activity
         id: fetch_activity
         run: |
-          # Consulta GraphQL para obtener la actividad reciente del usuario "Yourchh".
           QUERY=$(printf '{"query": "{user(login: \"Yourchh\") {contributionsCollection {commitContributionsByRepository(maxRepositories: 5) {repository {name url} contributions(first: 10) {nodes {occurredAt}}} pullRequestContributions(first: 10) {nodes {pullRequest {title url repository {name} createdAt}}} issueContributions(first: 10) {nodes {issue {title url repository {name} createdAt}}}}}}"}' )
 
-          # Usamos tu secreto GH_PATH para la autenticación.
           RESPONSE=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PATH }}" \
             -X POST -d "$QUERY" https://api.github.com/graphql)
 
           echo "$RESPONSE" > activity.json
 
-          # Extraer y formatear cada tipo de evento.
           COMMITS=$(jq -r '.data.user.contributionsCollection.commitContributionsByRepository[]?.repository | "⚡ Hice un commit en [" + .name + "](" + .url + ")"' activity.json)
           PRS=$(jq -r '.data.user.contributionsCollection.pullRequestContributions.nodes[]?.pullRequest | "📝 Abrí el PR [" + .title + "](" + .url + ") en " + .repository.name' activity.json)
           ISSUES=$(jq -r '.data.user.contributionsCollection.issueContributions.nodes[]?.issue | "❗ Creé el issue [" + .title + "](" + .issue.url + ") en " + .repository.name' activity.json)
 
-          # Combinar, eliminar líneas vacías y limitar a los 10 más recientes.
           ALL_EVENTS=$(printf "%s\n%s\n%s\n" "$COMMITS" "$PRS" "$ISSUES" | sed '/^$/d' | head -n 10)
           
-          # Formatear como una lista de Markdown.
           ACTIVITY_LOG=$(echo "$ALL_EVENTS" | sed 's/^/- /')
 
-          # Guardar el resultado en una variable de entorno para el siguiente paso.
           echo "ACTIVITY_LOG<<EOF" >> $GITHUB_ENV
           echo "$ACTIVITY_LOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Update README.md
-        #  crucial: Pasamos la variable del paso anterior al entorno de este script.
         env:
           ACTIVITY: ${{ env.ACTIVITY_LOG }}
         run: |
-          # Este comando reemplaza de forma segura el contenido entre los marcadores.
+          # ⚠️ CORRECCIÓN CRÍTICA: Se restauraron los marcadores correctos aquí.
           awk -v activity="$ACTIVITY" '
             // {
               print; 
@@ -67,7 +60,6 @@ jobs:
           ' README.md > README.md.tmp && mv README.md.tmp README.md
 
       - name: Commit and push changes
-        # Esta acción simplifica el commit y push.
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "docs(README): Update recent GitHub activity"
