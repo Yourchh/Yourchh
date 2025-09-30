@@ -59,6 +59,15 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
 
 ---
 
+<p align="center">
+  <a href="https://github.com/Yourchh">
+    <img src="https://github-readme-stats.vercel.app/api?username=Yourchh&show_icons=true&theme=dracula&count_private=true" alt="Estadísticas de GitHub de Yourchh" />
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Yourchh&layout=compact&theme=dracula" alt="Lenguajes más usados por Yourchh" />
+  </a>
+</p>
+
+---
+
 ### ⚡ Actividad Reciente
 <!--RECENT_ACTIVITY:start--> 
 1. ⭐ Starred [platzi/git-github](https://github.com/platzi/git-github)
