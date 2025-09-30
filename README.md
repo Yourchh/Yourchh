@@ -1,4 +1,4 @@
-# ¡Hola! Soy Jorge Andrés Hernández 👋
+# ¡Hola! Soy Jorge Andrés Hernández Pelayo 👋
 
 <p align="center">
   <em>Estudiante de <b>Ingeniería en Sistemas Computacionales</b> con una sólida formación en <b>Logística</b> y una gran pasión por el <b>Diseño de Experiencia de Usuario (UX)</b>.</em>
