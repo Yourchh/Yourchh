@@ -2,8 +2,8 @@ name: Update README with Recent Activity
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # cada 12 horas
-  workflow_dispatch:
+    - cron: "0 */12 * * *" # Se ejecuta cada 12 horas
+  workflow_dispatch: # Permite la ejecución manual
 
 jobs:
   update-readme:
@@ -16,56 +16,59 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq curl
+        run: sudo apt-get update && sudo apt-get install -y jq curl
 
       - name: Fetch GitHub activity
         id: fetch_activity
         run: |
-          # GraphQL query para tu usuario
-          QUERY='{
-            user(login: "Yourchh") {
-              contributionsCollection {
-                commitContributionsByRepository(maxRepositories: 5) {
-                  repository { name url }
-                  contributions(first: 10) { nodes { occurredAt } }
-                }
-                pullRequestContributions(first: 10) {
-                  nodes { pullRequest { title url repository { name } createdAt } }
-                }
-                issueContributions(first: 10) {
-                  nodes { issue { title url repository { name } createdAt } }
-                }
-              }
-            }
-          }'
+          # Consulta GraphQL para obtener la actividad reciente del usuario "Yourchh".
+          QUERY=$(printf '{"query": "{user(login: \"Yourchh\") {contributionsCollection {commitContributionsByRepository(maxRepositories: 5) {repository {name url} contributions(first: 10) {nodes {occurredAt}}} pullRequestContributions(first: 10) {nodes {pullRequest {title url repository {name} createdAt}}} issueContributions(first: 10) {nodes {issue {title url repository {name} createdAt}}}}}}"}' )
 
+          # Usamos tu secreto GH_PATH para la autenticación.
           RESPONSE=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PATH }}" \
-            -X POST -d "{\"query\": \"$QUERY\"}" https://api.github.com/graphql)
+            -X POST -d "$QUERY" https://api.github.com/graphql)
 
           echo "$RESPONSE" > activity.json
 
-          # Formatear eventos (commit, PR, issue)
-          COMMITS=$(jq -r '.data.user.contributionsCollection.commitContributionsByRepository[]?.contributions.nodes[]? | "⚡ Commit en " + .repository.name + " el " + .occurredAt[0:10]' activity.json)
-          PRS=$(jq -r '.data.user.contributionsCollection.pullRequestContributions.nodes[]? | "📝 PR: [" + .pullRequest.title + "](" + .pullRequest.url + ") en " + .pullRequest.repository.name + " el " + .pullRequest.createdAt[0:10]' activity.json)
-          ISSUES=$(jq -r '.data.user.contributionsCollection.issueContributions.nodes[]? | "❗ Issue: [" + .issue.title + "](" + .issue.url + ") en " + .issue.repository.name + " el " + .issue.createdAt[0:10]' activity.json)
+          # Extraer y formatear cada tipo de evento.
+          COMMITS=$(jq -r '.data.user.contributionsCollection.commitContributionsByRepository[]?.repository | "⚡ Hice un commit en [" + .name + "](" + .url + ")"' activity.json)
+          PRS=$(jq -r '.data.user.contributionsCollection.pullRequestContributions.nodes[]?.pullRequest | "📝 Abrí el PR [" + .title + "](" + .url + ") en " + .repository.name' activity.json)
+          ISSUES=$(jq -r '.data.user.contributionsCollection.issueContributions.nodes[]?.issue | "❗ Creé el issue [" + .title + "](" + .issue.url + ") en " + .repository.name' activity.json)
 
-          ALL_EVENTS=$(printf "%s\n%s\n%s\n" "$COMMITS" "$PRS" "$ISSUES" | sort -r | head -n 10)
-          ACTIVITY=$(echo "$ALL_EVENTS" | sed '/^$/d' | sed ':a;N;$!ba;s/\n/\n/g')
+          # Combinar, eliminar líneas vacías y limitar a los 10 más recientes.
+          ALL_EVENTS=$(printf "%s\n%s\n%s\n" "$COMMITS" "$PRS" "$ISSUES" | sed '/^$/d' | head -n 10)
+          
+          # Formatear como una lista de Markdown.
+          ACTIVITY_LOG=$(echo "$ALL_EVENTS" | sed 's/^/- /')
 
-          echo "ACTIVITY<<EOF" >> $GITHUB_ENV
-          echo "$ACTIVITY" >> $GITHUB_ENV
+          # Guardar el resultado en una variable de entorno para el siguiente paso.
+          echo "ACTIVITY_LOG<<EOF" >> $GITHUB_ENV
+          echo "$ACTIVITY_LOG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Update README
+      - name: Update README.md
+        #  crucial: Pasamos la variable del paso anterior al entorno de este script.
+        env:
+          ACTIVITY: ${{ env.ACTIVITY_LOG }}
         run: |
-          sed -i "/<!--START_SECTION:activity-->/, /<!--END_SECTION:activity-->/c\<!--START_SECTION:activity-->\n$ACTIVITY\n<!--END_SECTION:activity-->" README.md
+          # Este comando reemplaza de forma segura el contenido entre los marcadores.
+          awk -v activity="$ACTIVITY" '
+            // {
+              print; 
+              print activity; 
+              p=1
+            }
+            // {
+              p=0
+            }
+            !p {
+              print
+            }
+          ' README.md > README.md.tmp && mv README.md.tmp README.md
 
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "Update recent activity" || echo "No changes to commit"
-          git push
+      - name: Commit and push changes
+        # Esta acción simplifica el commit y push.
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs(README): Update recent GitHub activity"
+          file_pattern: README.md
