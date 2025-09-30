@@ -1,66 +1,18 @@
-name: Update README with Recent Activity
+name: Actualizar Actividad Reciente del README
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # Se ejecuta cada 12 horas
-  workflow_dispatch: # Permite la ejecución manual
+    # Se ejecuta cada 6 horas
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y jq curl
-
-      - name: Fetch GitHub activity
-        id: fetch_activity
-        run: |
-          QUERY=$(printf '{"query": "{user(login: \"Yourchh\") {contributionsCollection {commitContributionsByRepository(maxRepositories: 5) {repository {name url} contributions(first: 10) {nodes {occurredAt}}} pullRequestContributions(first: 10) {nodes {pullRequest {title url repository {name} createdAt}}} issueContributions(first: 10) {nodes {issue {title url repository {name} createdAt}}}}}}"}' )
-
-          RESPONSE=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PATH }}" \
-            -X POST -d "$QUERY" https://api.github.com/graphql)
-
-          echo "$RESPONSE" > activity.json
-
-          COMMITS=$(jq -r '.data.user.contributionsCollection.commitContributionsByRepository[]?.repository | "⚡ Hice un commit en [" + .name + "](" + .url + ")"' activity.json)
-          PRS=$(jq -r '.data.user.contributionsCollection.pullRequestContributions.nodes[]?.pullRequest | "📝 Abrí el PR [" + .title + "](" + .url + ") en " + .repository.name' activity.json)
-          ISSUES=$(jq -r '.data.user.contributionsCollection.issueContributions.nodes[]?.issue | "❗ Creé el issue [" + .title + "](" + .issue.url + ") en " + .repository.name' activity.json)
-
-          ALL_EVENTS=$(printf "%s\n%s\n%s\n" "$COMMITS" "$PRS" "$ISSUES" | sed '/^$/d' | head -n 10)
-          
-          ACTIVITY_LOG=$(echo "$ALL_EVENTS" | sed 's/^/- /')
-
-          echo "ACTIVITY_LOG<<EOF" >> $GITHUB_ENV
-          echo "$ACTIVITY_LOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Update README.md
+      - name: Actualizar sección de actividad reciente
+        uses: Readme-Workflows/recent-activity@v2.2.0
         env:
-          ACTIVITY: ${{ env.ACTIVITY_LOG }}
-        run: |
-          # ⚠️ CORRECCIÓN CRÍTICA: Se restauraron los marcadores correctos aquí.
-          awk -v activity="$ACTIVITY" '
-            // {
-              print; 
-              print activity; 
-              p=1
-            }
-            // {
-              p=0
-            }
-            !p {
-              print
-            }
-          ' README.md > README.md.tmp && mv README.md.tmp README.md
-
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "docs(README): Update recent GitHub activity"
-          file_pattern: README.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
