@@ -6,7 +6,7 @@
       <p>Bienvenido a mi rincón en GitHub. Aquí encontrarás mis proyectos, experimentos y contribuciones al mundo del código.</p>
     </td>
     <td valign="top" align="right">
-      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3Fvbm93Z3NxOGcxMWt6dTgzMnM1djN3bXc0Z21sMXJpZHF4eXJsbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/scZPhLqaVOM1qG4lT9/giphy.gif" width="150" alt="Funny coding GIF">
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3Fvbm93Z3NxOGcxMWt6dTgzMnM1djN3bXc0Z21sMXJpZHF4eXJsbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/scZPhLqaVOM1qG4lT9/giphy.gif" width="200" alt="Funny coding GIF">
     </td>
   </tr>
 </table>
