@@ -1,10 +1,15 @@
-# ¡Hola! Soy Jorge Andrés Hernández Pelayo 
-<p align="center">
-  <img src="https://media.giphy.com/media/l4FGlmpk9s0aomH2U/giphy.gif" width="600" alt="Funny coding GIF">
-</p>
-<p align="center">
-  <em>Estudiante de <b>Ingeniería en Sistemas Computacionales</b> con una sólida formación en <b>Logística</b> y una gran pasión por el <b>Diseño de Experiencia de Usuario (UX)</b>.</em>
-</p>
+<table>
+  <tr>
+    <td valign="top">
+      <h1>¡Hola! Soy Jorge Andrés Hernández 👋</h1>
+      <p><em>Estudiante de Ing. en Sistemas Computacionales con una gran pasión por el Diseño de Experiencia de Usuario (UX).</em></p>
+      <p>Bienvenido a mi rincón en GitHub. Aquí encontrarás mis proyectos, experimentos y contribuciones al mundo del código.</p>
+    </td>
+    <td valign="top" align="right">
+      <img src="https://media.giphy.com/media/IeWbqFs69gG0UPoO7z/giphy.gif" width="250" alt="Funny coding GIF">
+    </td>
+  </tr>
+</table>
 
 ---
 
