@@ -76,3 +76,9 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
 4. 📔 Created new repository [Yourchh/Peleter-a-y-Neveria-Ramirez](https://github.com/Yourchh/Peleter-a-y-Neveria-Ramirez)
 
 <!--RECENT_ACTIVITY:end-->
+
+---
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Yourchh/Yourchh/main/dist/snake.svg" alt="Animación de contribuciones de GitHub" />
+</p>
