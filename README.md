@@ -43,7 +43,7 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
 
 - 🌱 **Actualmente aprendiendo:** Desarrollo web avanzado, patrones de diseño de software y metodologías ágiles.
 - 💞️ **Busco colaborar en:** Proyectos de diseño de interfaces, aplicaciones web y soluciones que combinen una gran estética con una funcionalidad impecable.
-- 📫 **Contacto:** **jorgeandreshernandezpelayo@gmail.com**
+- 📫 **Contacto:** **jorgeandreshernandezpelayo'@'gmail.com**
 - 😄 **Pronombres:** él/ellos
 
 ---
