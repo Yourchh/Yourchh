@@ -50,10 +50,10 @@ Mi objetivo es aplicar mis conocimientos en proyectos reales y seguir fortalecie
 
 ### ⚡ Actividad Reciente
 <!--RECENT_ACTIVITY:start--> 
-1. 📔 Created new repository [yorch-s/.github](https://github.com/yorch-s/.github)
-2. ⭐ Starred [github/gitignore](https://github.com/github/gitignore)
-3. ⭐ Starred [platzi/git-github](https://github.com/platzi/git-github)
-4. 🔱 Forked [Yourchh/git-github](https://github.com/Yourchh/git-github) from [platzi/git-github](https://github.com/platzi/git-github)
+1. ✔️ Closed issue [#1](https://github.com/Yourchh/miCuartoRepo/issues/1) in [Yourchh/miCuartoRepo](https://github.com/Yourchh/miCuartoRepo)
+2. ❗️ Opened issue [#1](https://github.com/Yourchh/miCuartoRepo/issues/1) in [Yourchh/miCuartoRepo](https://github.com/Yourchh/miCuartoRepo)
+3. ⭐ Starred [github/gitignore](https://github.com/github/gitignore)
+4. ⭐ Starred [platzi/git-github](https://github.com/platzi/git-github)
 
 <!--RECENT_ACTIVITY:end-->
 
